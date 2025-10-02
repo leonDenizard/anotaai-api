@@ -26,7 +26,7 @@ describe("Visits Routes", () => {
   it("POST /api/visits/increment deve incrementar o total de visitas", async () => {
     (VisitsService.incrementVisit as jest.Mock).mockResolvedValue(1)
 
-    const response = await request(app).post("/api/visits/increment")
+    const response = await request(app).post("/api/visits")
 
     expect(response.status).toBe(200)
     expect(response.body).toMatchObject({

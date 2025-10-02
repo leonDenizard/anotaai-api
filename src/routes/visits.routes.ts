@@ -1,11 +1,11 @@
-import { Router } from "express";
-import {VisitController} from "../controllers/visits.controller";
+import { Router } from "express"
+import {VisitController} from "../controllers/visits.controller"
 
-const router = Router();
+const router = Router()
 
 /**
  * @openapi
- * /visits/increment:
+ * /visits:
  *   post:
  *     summary: Incrementa o contador de visitas
  *     tags:
@@ -18,7 +18,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ApiResponse'
  */
-router.post("/increment", VisitController.increment);
+router.post("/", VisitController.increment)
 
 /**
  * @openapi
@@ -36,6 +36,6 @@ router.post("/increment", VisitController.increment);
  *               $ref: '#/components/schemas/ApiResponse'
  */
 
-router.get("/", VisitController.getVisits);
+router.get("/", VisitController.getVisits)
 
-export default router;
+export default router

@@ -33,7 +33,7 @@ export class VisitController {
                 200,
                 true,
                 "Total visits",
-                {visits: count}
+                {visits: count},
             )
         } catch (error: any) {
             console.error("Error fetching visits:", error);
