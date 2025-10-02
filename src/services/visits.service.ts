@@ -1,8 +1,8 @@
 import { Visits } from "../models/visits.models"
 
-export class VisitsService{
+export default class VisitsService{
 
-    //increment number of visits
+    
     static async incrementVisit(): Promise<number>{
         let visit = await Visits.findOne()
 
@@ -15,8 +15,6 @@ export class VisitsService{
         await visit.save()
         return visit.count
     }
-
-    //get numbers visits
 
     static async getVisits(): Promise<number>{
         const visit = await Visits.findOne()
