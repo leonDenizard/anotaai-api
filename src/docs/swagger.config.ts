@@ -6,13 +6,21 @@ const options: swaggerJsdoc.Options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "API Visits",
+            title: "Anota Ai - API",
             version: "1.0.0",
-            description: "Documentação da API",
+            description: "Documentação da API projetada pra contablizar a quantidade de acessos ao site e cadastros de usuários",
+            contact: {
+                name: "Leon Denizard / integracao@anota.ai",
+                email: "integracao@anota.ai"
+            },
+        },
+        externalDocs: {
+            description: "Github",
+            url: "https://github.com/leonDenizard"
         },
         servers: [{ url: "http://localhost:3000/api" }],
         components: {
-            schemas: { // precisa ser "schemas" no plural
+            schemas: {
                 ApiResponse: {
                     type: "object",
                     properties: {
@@ -23,6 +31,17 @@ const options: swaggerJsdoc.Options = {
                     },
                     required: ["success", "message", "data", "errors"],
                 },
+                User: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string", example: "6512bd43d9caa6e02c990b0a" },
+                        name: { type: "string", example: "Nome do usuário" },
+                        email: { type: "string", example: "email@email.com" },
+                        role: { type: "string", example: "admin || user" },
+                        active: { type: "boolean", example: true }
+                    },
+                    required: ["id", "name", "email", "role", "active"]
+                }
             },
         },
     },
