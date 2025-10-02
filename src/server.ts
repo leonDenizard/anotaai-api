@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import visitsRoute from "./routes/visits.routes"
 
 import { connectDB } from "./database/connection"
+import swaggerConfig = require("./docs/swagger.config");
 
 dotenv.config();
 
@@ -12,9 +13,8 @@ const app = express()
 app.use(express.json())
 
 app.use("/api/visits", visitsRoute)
-app.get("/docs", (req, res) => {
-  res.send("API on")
-})
+
+swaggerConfig.setupSwagger(app)
 
 connectDB()
   .then(() => {
