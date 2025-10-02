@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { VisitsService } from "../services/visits.service"
+import VisitsService from "../services/visits.service"
 import sendResponse from "../utils/response"
 
 export class VisitController {

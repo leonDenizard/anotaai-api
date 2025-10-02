@@ -8,7 +8,7 @@ describe("VisitsService", () => {
         jest.clearAllMocks()
     })
 
-    it("deve criar uma visita se não existir", async () => {
+    it("Deve criar uma visita se não existir", async () => {
         (Visits.findOne as jest.Mock).mockResolvedValue(null);
 
         const saveMock = jest.fn().mockResolvedValue(true);
@@ -20,7 +20,7 @@ describe("VisitsService", () => {
         expect(saveMock).toHaveBeenCalled();
     });
 
-    it("deve incrementar a contagem se já existir", async () => {
+    it("Deve incrementar a contagem se já existir", async () => {
         const saveMock = jest.fn().mockResolvedValue(true);
         const visitMock = { count: 5, save: saveMock };
         (Visits.findOne as jest.Mock).mockResolvedValue(visitMock);
