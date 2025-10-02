@@ -1,5 +1,6 @@
 import express from "express"
 import dotenv from "dotenv";
+import visitsRoute from "./routes/visits.routes"
 
 import { connectDB } from "./database/connection"
 
@@ -10,6 +11,11 @@ const app = express()
 
 app.use(express.json())
 
+app.use("/api/visits", visitsRoute)
+app.get("/docs", (req, res) => {
+  res.send("API on")
+})
+
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
@@ -19,5 +25,3 @@ connectDB()
   }).catch((error) => {
     console.log("Error to start server", error)
   })
-
-app.listen(PORT, () => console.log(`Local server running ${PORT}`))
