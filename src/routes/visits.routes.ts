@@ -4,7 +4,7 @@ import {VisitController} from "../controllers/visits.controller"
 const router = Router()
 
 /**
- * @openapi
+ * @swagger
  * /visits:
  *   post:
  *     summary: Incrementa o contador de visitas
@@ -22,7 +22,7 @@ const router = Router()
 router.post("/", VisitController.increment)
 
 /**
- * @openapi
+ * @swagger
  * /visits:
  *   get:
  *     summary: Retorna o total de visitas

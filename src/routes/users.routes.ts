@@ -5,7 +5,7 @@ const route = Router()
 
 
 /**
- * @openapi
+ * @swagger
  * /users:
  *   post:
  *     summary: Cria um novo usuário
@@ -33,7 +33,7 @@ const route = Router()
 route.post("/", UsersController.createUser)
 
 /**
- * @openapi
+ * @swagger
  * /users:
  *   get:
  *     summary: Lista todos os usuários
@@ -55,7 +55,7 @@ route.post("/", UsersController.createUser)
 route.get("/", UsersController.getAllUsers)
 
 /**
- * @openapi
+ * @swagger
  * /users/{id}:
  *   get:
  *     summary: Busca usuário por ID

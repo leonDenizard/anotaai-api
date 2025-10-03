@@ -41,6 +41,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "removeComments": false,
   },
   "exclude": ["src/tests", "dist", "node_modules"]
 }

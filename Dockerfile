@@ -21,14 +21,21 @@ FROM node:20
 
 WORKDIR /app
 
-# Copiar apenas o necessário da etapa anterior
+# Copiar package.json e tsconfig
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/tsconfig.json ./ 
 
+# Instalar apenas produção + ts-node
 RUN npm install --only=production
+RUN npm install -D ts-node typescript @types/node
+
+# Copiar código fonte completo
+COPY . .
 
 # Expor a porta da API
 EXPOSE 3000
 
-# Comando para rodar
-CMD ["node", "dist/server.js"]
+ENV DOCKER=true
+
+# Rodar TS direto
+CMD ["npx", "ts-node", "src/server.ts"]
