@@ -40,7 +40,7 @@ export class UsersController {
             const users = await UsersService.getAllUsers()
 
             if(!users || users.length === 0){
-                return sendResponse(res, 404, true, "Users not found", [])
+                return sendResponse(res, 404, false, "Users not found", [])
             }
 
             return sendResponse(res, 200, true, "Fetching Users", users)

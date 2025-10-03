@@ -17,30 +17,7 @@ const route = Router()
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *               - password
- *               - role
- *             properties:
- *               name:
- *                 type: string
- *                 example: Leon
- *               email:
- *                 type: string
- *                 format: email
- *                 example: leon@email.com
- *               password:
- *                 type: string
- *                 format: password
- *                 example: "Passwrd"
- *               role:
- *                 type: string
- *                 example: admin || user
- *               active:
- *                 type: boolean
- *                 example: true
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       "201":
  *         description: User created
