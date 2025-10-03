@@ -13,9 +13,9 @@ const sendResponse = <T>(
     success: boolean,
     message: string,
     data: T | null = null,
-    errors: string | object | null
+    errors?: string | object | null
 ) => {
-    const response: ApiResponse<T> = {success, message, data, errors}
+    const response: ApiResponse<T> = {success, message, data, errors: errors ?? null}
     return res.status(status).json(response)
 }
 

@@ -46,7 +46,7 @@ const options: swaggerJsdoc.Options = {
             },
         },
     },
-    apis: ["./src/routes/*.ts", "./src/controllers/*.ts"], // caminhos corretos para JSDoc
+    apis: ["./src/routes/*.ts", "./src/controllers/*.ts", "./dist/routes/*.js", "./dist/controllers/*.js"],
 };
 
 

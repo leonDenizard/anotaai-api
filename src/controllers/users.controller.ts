@@ -55,7 +55,7 @@ export class UsersController {
             
             const {id} = req.params
 
-            if(!Types.ObjectId.isValid(id)){
+            if(!id || !Types.ObjectId.isValid(id)){
                 return sendResponse(res, 400, false, "Invalid ID")
             }
 
