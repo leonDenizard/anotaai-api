@@ -27,7 +27,8 @@ O desafio consiste em construir uma API que:
 - **bcrypt** → hash de senha e segurança.  
 - **Jest + Supertest** → testes unitários e de integração.  
 - **Swagger (OpenAPI)** → documentação da API.  
-- **dotenv** → variáveis de ambiente.  
+- **dotenv** → variáveis de ambiente.
+- **docker** → containerização da API.  
 
 ---
 
@@ -83,6 +84,22 @@ npm run dev
 ## Como Rodar testes
 ```bash
 npm test
+```
+## 🐳 Docker
+
+Este projeto também está containerizado com **Docker**, facilitando a execução em qualquer ambiente.
+
+### Pré-requisitos
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+### Rodando com Docker
+Para subir o projeto em container:
+
+
+```bash
+docker-compose up --build
+
 ```
 
 ## Deploy
