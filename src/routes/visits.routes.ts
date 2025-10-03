@@ -8,6 +8,7 @@ const router = Router()
  * /visits:
  *   post:
  *     summary: Incrementa o contador de visitas
+ *     description: Conta a quantidade de visitas do site
  *     tags:
  *       - Visits
  *     responses:
