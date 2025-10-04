@@ -4,16 +4,14 @@ export default class VisitsService{
 
     
     static async incrementVisit(): Promise<number>{
-        let visit = await Visits.findOne()
 
-        if(!visit){
-            visit = new Visits({count: 1})
-        }else{
-            visit.count += 1
-        }
+        const updated = await Visits.findOneAndUpdate(
+            {},
+            { $inc: {count: 1 }},
+            { new: true, upsert: true}
+        )
 
-        await visit.save()
-        return visit.count
+        return updated.count
     }
 
     static async getVisits(): Promise<number>{

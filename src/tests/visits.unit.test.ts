@@ -9,26 +9,20 @@ describe("VisitsService", () => {
     })
 
     it("Deve criar uma visita se não existir", async () => {
-        (Visits.findOne as jest.Mock).mockResolvedValue(null);
-
-        const saveMock = jest.fn().mockResolvedValue(true);
-        (Visits as any).mockImplementation(() => ({ count: 1, save: saveMock }));
+        (Visits.findOneAndUpdate as jest.Mock).mockResolvedValue({ count: 1});
 
         const count = await VisitsService.incrementVisit();
 
         expect(count).toBe(1);
-        expect(saveMock).toHaveBeenCalled();
     });
 
     it("Deve incrementar a contagem se já existir", async () => {
-        const saveMock = jest.fn().mockResolvedValue(true);
-        const visitMock = { count: 5, save: saveMock };
-        (Visits.findOne as jest.Mock).mockResolvedValue(visitMock);
+        const visitMock = { count: 6};
+        (Visits.findOneAndUpdate as jest.Mock).mockResolvedValue(visitMock);
 
         const count = await VisitsService.incrementVisit();
 
         expect(count).toBe(6);
-        expect(saveMock).toHaveBeenCalled();
     });
 
     it("Deve buscar o total de visitas do site", async() => {

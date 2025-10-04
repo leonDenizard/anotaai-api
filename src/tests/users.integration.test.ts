@@ -14,7 +14,7 @@ beforeAll(async () => {
   mongo = await MongoMemoryServer.create()
   const uri = mongo.getUri()
   await mongoose.connect(uri)
-  console.log("Mongo conectado em memória:", uri)
+  // console.log("Mongo conectado em memória:", uri)
 })
 
 afterAll(async () => {
