@@ -5,7 +5,7 @@ import { Express } from "express"
 import dotenv from "dotenv";
 dotenv.config();
 
-const baseUrl = process.env.NODE_ENV === "production" ? process.env.NODE_ENV : "http://localhost:3000/api"
+const baseUrl = process.env.NODE_ENV === "production" ? process.env.BASE_URL : "http://localhost:3000/api"
 
 const options: swaggerJsdoc.Options = {
     definition: {
