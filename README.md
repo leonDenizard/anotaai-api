@@ -1,3 +1,5 @@
+🇬🇧 [English version](README-en.md)
+
 ## 📜 Enunciado do Desafio
 
 O desafio consiste em construir uma API que:
@@ -28,7 +30,7 @@ O desafio consiste em construir uma API que:
 - **Jest + Supertest** → testes unitários e de integração.  
 - **Swagger (OpenAPI)** → documentação da API.  
 - **dotenv** → variáveis de ambiente.
-- **docker** → containerização da API.  
+- **Docker** → containerização da API.  
 
 ---
 
@@ -66,7 +68,7 @@ server.ts # Ponto de entrada do projeto
 | GET    | `/api/users/:id`  | Busca usuário pelo ID        |
 
 > A documentação completa está disponível via Swagger:  
-> [http://localhost:3000/docs](http://localhost:3000/docs)
+> https://anotaai-api-q5ar.onrender.com/api/docs/
 
 ---
 
@@ -81,6 +83,29 @@ npm install
 
 npm run dev
 ```
+
+## ⚙️ Configuração do Ambiente (.env)
+
+Para rodar a aplicação, é necessário criar um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
+# Porta em que a API irá rodar
+PORT=3000
+
+# URI do MongoDB (substitua usuário, senha e nome do banco)
+MONGO_URI=mongodb+srv://root:senha@banco
+
+# URL base da API (para local ou produção)
+BASE_URL=http://localhost:3000/api
+# ou
+# BASE_URL=https://anotaai-api-q5ar.onrender.com/api
+
+# Ambiente da aplicação
+NODE_ENV=development
+# ou
+# NODE_ENV=production
+```
+
 ## Como Rodar testes
 ```bash
 npm test
@@ -94,7 +119,7 @@ Este projeto também está containerizado com **Docker**, facilitando a execuç�
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ### Rodando com Docker
-Para subir o projeto em container:
+Para subir o projeto em container, é necessário ter um arquivo `.env` válido na raiz do projeto, com as variáveis de ambiente configuradas, depois rode:
 
 
 ```bash
@@ -104,6 +129,16 @@ docker-compose up --build
 
 ## Deploy
 
-A API também está rodando na AWS EC2:
+API encontra-se pronta para uso no Render
 
-`http://18.191.177.83:3000/api/visits` 
+`https://anotaai-api-q5ar.onrender.com/api/visits`
+
+`https://anotaai-api-q5ar.onrender.com/api/users`
+
+---
+
+A API também está rodando na AWS numa EC2:
+
+`http://18.191.177.83:3000/api/visits`
+
+`http://18.191.177.83:3000/api/users` 

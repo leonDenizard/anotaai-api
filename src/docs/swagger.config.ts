@@ -39,7 +39,7 @@ const options: swaggerJsdoc.Options = {
                 User: {
                     type: "object",
                     properties: {
-                        id: { type: "string", example: "6512bd43d9caa6e02c990b0a" },
+                        id: { type: "string", example: "6512bd43d9caa6e02c990b0a", readOnly: true },
                         name: { type: "string", example: "Nome do usuário" },
                         email: { type: "string", example: "email@email.com" },
                         password: { type: "string", example: "Integration@2025", writeOnly: true },
