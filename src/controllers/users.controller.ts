@@ -12,6 +12,16 @@ export class UsersController {
         try {
             const { _id, name, password, email, role, active } = req.body
 
+            const currentRoles = ["admin", "user"]
+            const existingUser = await UsersService.getByEmail(email)
+
+            if(existingUser){
+                return sendResponse(res, 400, false, "Email already registered, please use another email")
+            }
+
+            if(role && !currentRoles.includes(role)){
+                return sendResponse(res, 400, false, "Invalid role. Use 'admin' or 'user' for role")
+            }
 
             if (!validateEmail(email)) { 
                 return sendResponse(res, 400, false, "Invalid email format. Use email@domain.com")

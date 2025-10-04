@@ -8,6 +8,8 @@ let mongo: MongoMemoryServer
 
 jest.setTimeout(30000)
 
+const role = ["admin", "user"]
+
 beforeAll(async () => {
   mongo = await MongoMemoryServer.create()
   const uri = mongo.getUri()
@@ -47,6 +49,46 @@ describe("Users teste de integracao", () => {
         role: "user",
         active: true,
       })
+    })
+    it("Deve gerar erro ser role for diferente de admin ou user", async () => {
+      const response = await request(app)
+        .post("/api/users")
+        .send({
+          name: "Seu nome",
+          email: "email@domain.com",
+          password: "Password123!",
+          role: "users",
+        })
+
+      expect(response.status).toBe(400)
+      expect(response.body.success).toBe(false)
+      expect(response.body.message).toContain("Invalid role. Use 'admin' or 'user' for role")
+
+    })
+
+    it("Deve gerar erro caso e-mail já exista no banco de dados", async () => {
+      await request(app)
+        .post("/api/users")
+        .send({
+          name: "Seu nome",
+          email: "email@domain.com",
+          password: "Nova@2022",
+        })
+
+      expect(201)
+
+      const response = await request(app)
+      .post("/api/users")
+      .send({
+        name: "Seu nome",
+        email: "email@domain.com",
+        password: "Nova@2022",
+      })
+
+      expect(response.status).toBe(400)
+      expect(response.body.success).toBe(false)
+      expect(response.body.message).toContain("Email already registered, please use another email")
+
     })
 
     it("Deve gerar erro com e-mail invalido", async () => {

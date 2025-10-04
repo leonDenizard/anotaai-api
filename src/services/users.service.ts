@@ -20,4 +20,8 @@ export default class UsersService{
 
     static getUserById = (id: string | Types.ObjectId ) => Users.findById(id)
         .select("-password -__v")
+
+    static getByEmail = (email: string) => {
+        return Users.findOne({email})
+    }
 }
