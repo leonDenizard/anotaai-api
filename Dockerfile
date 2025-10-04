@@ -37,5 +37,5 @@ EXPOSE 3000
 
 ENV DOCKER=true
 
-# Rodar TS direto
-CMD ["npx", "ts-node", "src/server.ts"]
+# Comando final para rodar o build
+CMD ["node", "dist/server.js"]

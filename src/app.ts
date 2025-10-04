@@ -3,7 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import visitsRoute from "./routes/visits.routes";
 import usersRoute from "./routes/users.routes";
-import swaggerConfig = require("./docs/swagger.config");
+import {setupSwagger} from "./docs/swagger.config";
 
 const app = express();
 
@@ -14,6 +14,6 @@ app.use(cors())
 app.use("/api/visits", visitsRoute);
 app.use("/api/users", usersRoute);
 
-swaggerConfig.setupSwagger(app);
+setupSwagger(app);
 
 export default app;

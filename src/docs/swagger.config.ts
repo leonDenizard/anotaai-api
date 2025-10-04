@@ -2,6 +2,8 @@ import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from "swagger-ui-express"
 import { Express } from "express"
 
+const baseUrl = process.env.BASE_URL || "http://localhost:3000/api"
+
 const options: swaggerJsdoc.Options = {
     definition: {
         openapi: "3.0.0",
@@ -18,7 +20,7 @@ const options: swaggerJsdoc.Options = {
             description: "Github",
             url: "https://github.com/leonDenizard"
         },
-        servers: [{ url: "http://localhost:3000/api" }],
+        servers: [{ url: baseUrl }],
         components: {
             schemas: {
                 ApiResponse: {
@@ -46,12 +48,12 @@ const options: swaggerJsdoc.Options = {
             },
         },
     },
-    apis: ["./src/routes/*.ts", "./src/controllers/*.ts", "./dist/routes/*.js", "./dist/controllers/*.js"],
+    apis: ["./src/routes/*.js", "./src/controllers/*.js"],
 };
 
 
 const swaggerSpec = swaggerJsdoc(options)
 
 export function setupSwagger(app: Express): void {
-    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+    app.use("/docs/", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }
