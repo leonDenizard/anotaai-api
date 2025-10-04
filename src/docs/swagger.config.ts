@@ -2,7 +2,10 @@ import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from "swagger-ui-express"
 import { Express } from "express"
 
-const baseUrl = process.env.BASE_URL || "http://localhost:3000/api"
+import dotenv from "dotenv";
+dotenv.config();
+
+const baseUrl = process.env.BASE_URL === "production" ? process.env.BASE_URL : "http://localhost:3000/api"
 
 const options: swaggerJsdoc.Options = {
     definition: {
@@ -51,9 +54,9 @@ const options: swaggerJsdoc.Options = {
     apis: ["./dist/routes/*.js", "./dist/controllers/*.js"],
 };
 
-
+console.log(baseUrl)
 const swaggerSpec = swaggerJsdoc(options)
 
 export function setupSwagger(app: Express): void {
-    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+    app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }
