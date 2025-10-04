@@ -1,41 +1,28 @@
 # Etapa 1: Build
 FROM node:20 AS builder
-
-# Diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copiar arquivos de dependências
+# Copiar arquivos de dependências e instalar dev+prod
 COPY package*.json tsconfig.json ./
-
-# Instalar dependências
 RUN npm install
 
-# Copiar código fonte
+# Copiar código fonte e build
 COPY . .
+RUN npm run build   # gera dist/
 
-# Build do projeto (gera dist/)
-RUN npm run build
-
-# Etapa 2: Run (imagem final mais leve)
+# Etapa 2: Run
 FROM node:20
-
 WORKDIR /app
 
-# Copiar package.json e tsconfig
+# Copiar apenas o dist e package.json (para dependências)
+COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/tsconfig.json ./ 
 
-# Instalar apenas produção + ts-node
+# Instalar apenas dependências de produção
 RUN npm install --only=production
-RUN npm install -D ts-node typescript @types/node
 
-# Copiar código fonte completo
-COPY . .
-
-# Expor a porta da API
+# Expor porta
 EXPOSE 3000
 
-ENV DOCKER=true
-
-# Comando final para rodar o build
+# Rodar JS compilado
 CMD ["node", "dist/server.js"]
