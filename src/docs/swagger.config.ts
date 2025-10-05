@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const baseUrl = process.env.NODE_ENV === "production" ? process.env.BASE_URL : "http://localhost:3000/api"
-
+const apiPath = process.env.NODE_ENV === "production" ? ["./dist/routes/*.js", "./dist/controllers/*.js"] : ["./src/routes/*.ts", "./src/controllers/*.ts"]
 const options: swaggerJsdoc.Options = {
     definition: {
         openapi: "3.0.0",
@@ -51,10 +51,9 @@ const options: swaggerJsdoc.Options = {
             },
         },
     },
-    apis: ["./dist/routes/*.js", "./dist/controllers/*.js"],
+    apis: apiPath,
 };
 
-console.log(baseUrl)
 const swaggerSpec = swaggerJsdoc(options)
 
 export function setupSwagger(app: Express): void {

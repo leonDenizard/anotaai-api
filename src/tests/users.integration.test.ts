@@ -78,12 +78,12 @@ describe("Users teste de integracao", () => {
       expect(201)
 
       const response = await request(app)
-      .post("/api/users")
-      .send({
-        name: "Seu nome",
-        email: "email@domain.com",
-        password: "Nova@2022",
-      })
+        .post("/api/users")
+        .send({
+          name: "Seu nome",
+          email: "email@domain.com",
+          password: "Nova@2022",
+        })
 
       expect(response.status).toBe(400)
       expect(response.body.success).toBe(false)
@@ -121,67 +121,67 @@ describe("Users teste de integracao", () => {
       expect(response.body.message).toContain("Invalid password. Use at least 8 characters, including uppercase, lowercase, numbers, and symbols.")
     })
 
-    describe("GET /api/users", () => {
-      it("Deve retornar 404 se não tiver usuários no banco", async () => {
-        const response = await request(app).get("/api/users")
 
-        expect(response.status).toBe(404)
-        expect(response.body.success).toBe(false)
-        expect(response.body.message).toContain("Users not found")
-        expect(response.body.data).toEqual([])
-      })
+  })
+  describe("GET /api/users", () => {
+    it("Deve retornar 404 se não tiver usuários no banco", async () => {
+      const response = await request(app).get("/api/users")
 
-      it("Deve retornar a lista de usuários", async () => {
-        await Users.create({
-          name: "Seu nome",
-          email: "nome@email.com",
-          password: "hashedpassword",
-          role: "user",
-          active: true,
-        })
-
-        const response = await request(app).get("/api/users")
-
-        expect(response.status).toBe(200)
-        expect(response.body.success).toBe(true)
-        expect(response.body.message).toContain("Fetching Users")
-        expect(response.body.data.length).toBe(1)
-      })
+      expect(response.status).toBe(404)
+      expect(response.body.success).toBe(false)
+      expect(response.body.message).toContain("Users not found")
+      expect(response.body.data).toEqual([])
     })
 
-    describe("GET /api/users/:id", () => {
-      it("Deve retornar erro 400 se o ID passado via params não for valido", async () => {
-        const response = await request(app).get("/api/users/invalid-id")
-
-        expect(response.status).toBe(400)
-        expect(response.body.success).toBe(false)
-        expect(response.body.message).toContain("Invalid ID")
+    it("Deve retornar a lista de usuários", async () => {
+      await Users.create({
+        name: "Seu nome",
+        email: "nome@email.com",
+        password: "hashedpassword",
+        role: "user",
+        active: true,
       })
 
-      it("Deve retornar 404 se não encontrar o usuário", async () => {
-        const id = new mongoose.Types.ObjectId()
-        const response = await request(app).get(`/api/users/${id}`)
+      const response = await request(app).get("/api/users")
 
-        expect(response.status).toBe(404)
-        expect(response.body.success).toBe(false)
-        expect(response.body.message).toContain("User not found")
+      expect(response.status).toBe(200)
+      expect(response.body.success).toBe(true)
+      expect(response.body.message).toContain("Fetching Users")
+      expect(response.body.data.length).toBe(1)
+    })
+  })
+  describe("GET /api/users/:id", () => {
+    it("Deve retornar erro 400 se o ID passado via params não for valido", async () => {
+      const response = await request(app).get("/api/users/invalid-id")
+
+      expect(response.status).toBe(400)
+      expect(response.body.success).toBe(false)
+      expect(response.body.message).toContain("Invalid ID")
+    })
+
+    it("Deve retornar 404 se não encontrar o usuário", async () => {
+      const id = new mongoose.Types.ObjectId()
+      const response = await request(app).get(`/api/users/${id}`)
+
+      expect(response.status).toBe(404)
+      expect(response.body.success).toBe(false)
+      expect(response.body.message).toContain("User not found")
+    })
+
+    it("Deve retornar status 200 e o usuário encontrado", async () => {
+      const user = await Users.create({
+        name: "nome",
+        email: "email@email.com",
+        password: "hashedpassword",
+        role: "admin",
+        active: true,
       })
 
-      it("Deve retornar status 200 e o usuário encontrado", async () => {
-        const user = await Users.create({
-          name: "nome",
-          email: "email@email.com",
-          password: "hashedpassword",
-          role: "admin",
-          active: true,
-        })
+      const response = await request(app).get(`/api/users/${user._id}`)
 
-        const response = await request(app).get(`/api/users/${user._id}`)
-
-        expect(response.status).toBe(200)
-        expect(response.body.success).toBe(true)
-        expect(response.body.data.email).toBe("email@email.com")
-      })
+      expect(response.status).toBe(200)
+      expect(response.body.success).toBe(true)
+      expect(response.body.data.email).toBe("email@email.com")
     })
   })
 })
