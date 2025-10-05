@@ -1,10 +1,10 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import VisitsService from "../services/visits.service"
 import sendResponse from "../utils/response"
 
 export class VisitController {
 
-    static async increment(req: Request, res: Response) {
+    static async increment(req: Request, res: Response, next: NextFunction) {
 
         try {
             const count = await VisitsService.incrementVisit()
@@ -12,18 +12,11 @@ export class VisitController {
             return sendResponse(res, 200, true, "Update visits", {visits: count})
 
         } catch (error: any) {
-            return sendResponse(
-                res,
-                500,
-                false,
-                "Internal server error",
-                null,
-                error.message || error
-            )
+            next(error)
         }
     }
 
-    static async getVisits(req: Request, res: Response) {
+    static async getVisits(req: Request, res: Response, next: NextFunction) {
 
         try {
             const count = await VisitsService.getVisits();
@@ -36,15 +29,7 @@ export class VisitController {
                 {visits: count},
             )
         } catch (error: any) {
-            console.error("Error fetching visits:", error);
-            return sendResponse(
-                res,
-                500,
-                false,
-                "Error fetching visits",
-                null,
-                error.message || error
-            )
+            next(error)
         }
     }
 }

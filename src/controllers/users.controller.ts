@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import UsersService from "../services/users.service"
 import sendResponse from "../utils/response"
 import { Types } from "mongoose"
@@ -7,7 +7,7 @@ import { validateEmail, validatePassword } from "../utils/regex"
 
 export class UsersController {
 
-    static async createUser(req: Request, res: Response) {
+    static async createUser(req: Request, res: Response, next: NextFunction) {
 
         try {
             const { _id, name, password, email, role, active } = req.body
@@ -15,69 +15,73 @@ export class UsersController {
             const currentRoles = ["admin", "user"]
             const existingUser = await UsersService.getByEmail(email)
 
-            if(existingUser){
-                return sendResponse(res, 400, false, "Email already registered, please use another email")
+            if (existingUser) {
+                throw { message: "Email already registered, please use another email", statusCode: 400 }
             }
 
-            if(role && !currentRoles.includes(role)){
-                return sendResponse(res, 400, false, "Invalid role. Use 'admin' or 'user' for role")
+            if (role && !currentRoles.includes(role)) {
+                throw { message: "Invalid role. Use 'admin' or 'user' for role", statusCode: 400 }
             }
 
-            if (!validateEmail(email)) { 
-                return sendResponse(res, 400, false, "Invalid email format. Use email@domain.com")
+            if (!validateEmail(email)) {
+                throw { message: "Invalid email format. Use email@domain.com", statusCode: 400 }
             }
 
-            if(!validatePassword(password)){
-                return sendResponse(res, 400, false, "Invalid password. Use at least 8 characters, including uppercase, lowercase, numbers, and symbols.")
+            if (!validatePassword(password)) {
+                throw {
+                    message:
+                        "Invalid password. Use at least 8 characters, including uppercase, lowercase, numbers, and symbols.",
+                    statusCode: 400,
+                }
             }
 
             const user = await UsersService.create(req.body)
             if (!user) {
-                return sendResponse(res, 400, false, "Error create user")
+                throw { message: "Error creating user", statusCode: 400 };
             }
 
             return sendResponse(res, 201, true, "User created", { id: user._id, name, email, role, active })
         } catch (error: any) {
 
-            return sendResponse(res, 500, false, "Internal server error", null, error.message);
+            next(error)
         }
     }
 
-    static async getAllUsers(req: Request, res: Response){
+    static async getAllUsers(req: Request, res: Response, next: NextFunction) {
 
         try {
-            
+
             const users = await UsersService.getAllUsers()
 
-            if(!users || users.length === 0){
-                return sendResponse(res, 404, false, "Users not found", [])
+            if (!users || users.length === 0) {
+                throw { message: "Users not found", statusCode: 400, details: null, data: [] }
             }
 
             return sendResponse(res, 200, true, "Fetching Users", users)
         } catch (error: any) {
-            return sendResponse(res, 500, false, "Internal server error", null, error.message)
+            next(error)
         }
     }
 
-    static async getUserById(req: Request, res: Response){
+    static async getUserById(req: Request, res: Response, next: NextFunction) {
 
         try {
-            
-            const {id} = req.params
 
-            if(!id || !Types.ObjectId.isValid(id)){
-                return sendResponse(res, 400, false, "Invalid ID")
+            const { id } = req.params
+
+            if (!id || !Types.ObjectId.isValid(id)) {
+                throw { message: "Invalid ID", statusCode: 400 }
             }
 
             const user = await UsersService.getUserById(id)
 
-            if(!user){
-                return sendResponse(res, 404, false, "User not found")
+            if (!user) {
+                throw { message: "User not found", statusCode: 400 }
             }
 
             return sendResponse(res, 200, true, "Fetching user", user)
         } catch (error: any) {
-            return sendResponse(res, 500, false, "Internal server error", null, error.message)
+            next(error)
         }
     }
 }

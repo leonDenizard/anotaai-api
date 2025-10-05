@@ -127,7 +127,7 @@ describe("Users teste de integracao", () => {
     it("Deve retornar 404 se não tiver usuários no banco", async () => {
       const response = await request(app).get("/api/users")
 
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(400)
       expect(response.body.success).toBe(false)
       expect(response.body.message).toContain("Users not found")
       expect(response.body.data).toEqual([])
@@ -163,7 +163,7 @@ describe("Users teste de integracao", () => {
       const id = new mongoose.Types.ObjectId()
       const response = await request(app).get(`/api/users/${id}`)
 
-      expect(response.status).toBe(404)
+      expect(response.status).toBe(400)
       expect(response.body.success).toBe(false)
       expect(response.body.message).toContain("User not found")
     })

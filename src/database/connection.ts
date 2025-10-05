@@ -6,7 +6,7 @@ dotenv.config()
 const MONGO_URI = process.env.MONGO_URI
 
 if(!MONGO_URI){
-  throw new Error("MONGO_URI not configured")
+  throw {message: "URI not configured", statusCode: 500}
 }
 
 export const connectDB = async () => {

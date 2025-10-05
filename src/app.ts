@@ -4,6 +4,7 @@ import cors from "cors";
 import visitsRoute from "./routes/visits.routes";
 import usersRoute from "./routes/users.routes";
 import {setupSwagger} from "./docs/swagger.config";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app = express();
 
@@ -15,5 +16,5 @@ app.use("/api/visits", visitsRoute);
 app.use("/api/users", usersRoute);
 
 setupSwagger(app);
-
+app.use(errorHandler)
 export default app;
