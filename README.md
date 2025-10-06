@@ -139,6 +139,6 @@ API encontra-se pronta para uso no Render
 
 A API também está rodando na AWS numa EC2:
 
-`http://18.191.177.83:3000/api/visits`
+`http://18.223.180.63:3000/api/visits`
 
-`http://18.191.177.83:3000/api/users` 
+`http://18.223.180.63:3000/api/users` 
